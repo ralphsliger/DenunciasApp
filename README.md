@@ -10,7 +10,7 @@ La estructura del proyecto esta organizado de acuerdo a Blueprint
     - User (Modulo)
       - views.py (Controlador modulo dashboard)
       - models.py (Modelo Base de datos)
-    - env (carpeta de entorno virtual con virtual env
+    - env (carpeta de entorno virtual con virtual env)
     - app.py (Inicializador de cada modulo)
     - config.py (archivo configuracion del proyecto)
     - run.py (iniciar servidor) 
