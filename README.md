@@ -20,7 +20,7 @@ La estructura del proyecto esta organizado de acuerdo a Blueprint
  ## Iniciar proyecto
 
 ### Activar entorno virtual
- `source denuncias-env/bin/activate`
+ `source env/bin/activate`
 
 ### Iniciar servidor
 `python run.py`
