@@ -7,16 +7,14 @@ App denuncias
 ### Estructura del proyecto 
 La estructura del proyecto esta organizado de acuerdo a Blueprint
 - App (Carpeta del proyecto)
-    - Dashboard (Modulo)
-      - __init__.py (Inicializador del modulo) 
-      - dashboard.py (Controlador modulo dashboard)
-    - Denuncias (Modulo)
-      - __init__.py (Inicializador del modulo)
-      - denuncias.py (Contralador modulo denuncias)
-  - __init__.py (Inicializador de cada modulo)
- - configuration.py (archivo configuracion del proyecto)
- - run.py (iniciar servidor) 
- - denuncias-env (carpeta de entorno virtual con virtual env)
+    - User (Modulo)
+      - views.py (Controlador modulo dashboard)
+      - models.py (Modelo Base de datos)
+    - env (carpeta de entorno virtual con virtual env
+    - app.py (Inicializador de cada modulo)
+    - config.py (archivo configuracion del proyecto)
+    - run.py (iniciar servidor) 
+
  
  
  ## Iniciar proyecto
