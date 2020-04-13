@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, request
 from user.models import User
 from user.forms import RegistrationForm
+import bcrypt
 
 
 user_page = Blueprint('user_page', __name__)
@@ -17,6 +18,19 @@ def login():
 def signup():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(form.password.data, salt)
+        
+        user = User(
+            
+            username= form.username.data,
+            name= form.name.data,
+            lastname= form.lastname.data,
+            city= form.city.data,
+            email= form.email.data,
+            password= hashed_password
+        )
+        user.save()
         return 'formulario'
     return render_template('user/signup.html', form=form)
 
