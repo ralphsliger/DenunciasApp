@@ -8,5 +8,5 @@ class RegistrationForm(Form):
     lastname = StringField('Your Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
     city = StringField('Your City', [validators.DataRequired(),validators.Length(min=2,max=30)])
     email = EmailField('Email Adress', [validators.DataRequired(), validators.Email()])
-    password = PasswordField('New password',[validators.DataRequired(), validators.EqualTo('confirm', message='password must match')])
+    password = PasswordField('New password', [validators.DataRequired(), validators.EqualTo('confirm', message='password must match')])
     confirm = PasswordField('Repeat password')

@@ -6,20 +6,20 @@
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <h3>Signup</h3>
-        {% from '_formhelper.html' import render_field %}
-        <form method="POST" action="{ url_for('user_page.signup')}">
+        {% from '_formhelpers.html' import render_field %}
+        <form method="POST" action="{{ url_for('user_page.signup') }}">
             {{ form.crsf_token }}
-            {{ render_field(form.username, class='form-control', placeholder='enter your username')}}
-            {{ render_field(form.name, class='form-control', placeholder='enter your name')}}
-            {{ render_field(form.lastname, class='form-control', placeholder='enter your last name')}}
-            {{ render_field(form.city, class='form-control', placeholder='enter your city')}}
-            {{ render_field(form.email, class='form-control', placeholder='enter your email')}}
-            {{ render_field(form.password, class='form-control', placeholder='enter your password')}}
-            {{ render_field(form.confirm, class='form-control', placeholder='enter your name password confirm')}}
-
+            {{ render_field(form.username, class='form-control', placeholder='enter your username') }}
+            {{ render_field(form.name, class='form-control', placeholder='enter your name') }}
+            {{ render_field(form.lastname, class='form-control', placeholder='enter your last name') }}
+            {{ render_field(form.city, class='form-control', placeholder='enter your city') }}
+            {{ render_field(form.email, class='form-control', placeholder='enter your email') }}
+            {{ render_field(form.password, class='form-control', placeholder='enter your password') }}
+            {{ render_field(form.confirm, class='form-control', placeholder='enter your password again to confirm') }}
+            <button type="submit" class="btn btn-success"> Signup </button>
         </form>
 
-        <button type="submit" class="btn btn-success"> Signup </button>
+        
     </div>
 </div>
 {% endblock  %}
