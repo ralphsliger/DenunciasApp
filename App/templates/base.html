@@ -1,0 +1,101 @@
+<!-- saved from url=(0266)https://mp4-a.udemycdn.com/2018-08-20_12-24-33-2277d31cc9916dcdc91ec5c549853b24/original.html?HZw0fwoxYRV3yENbkf_wAVHIprDOUQkYFCn1q8_Vk9yqN8RbVq6fovQKXdjY_4AtaAf8GAw9Mol7PqBisVjlz9QLL6aain8399fij693A-QSSwf4T3wo6RZfAodAyh3VPO3TAqNrzfYqQhGGnuPEa-C8akZbmwMUr5HgBSNvZjL3 -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  
+    <title> {% block titel %} {%endblock%}</title>
+  
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  
+    <!-- Custom styles for this template -->
+    <style>
+      .container {
+        padding-top: 100px;
+      }
+    </style>
+  
+  <script data-dapp-detection="">
+  (function() {
+    let alreadyInsertedMetaTag = false
+  
+    function __insertDappDetected() {
+      if (!alreadyInsertedMetaTag) {
+        const meta = document.createElement('meta')
+        meta.name = 'dapp-detected'
+        document.head.appendChild(meta)
+        alreadyInsertedMetaTag = true
+      }
+    }
+  
+    if (window.hasOwnProperty('web3')) {
+      // Note a closure can't be used for this var because some sites like
+      // www.wnyc.org do a second script execution via eval for some reason.
+      window.__disableDappDetectionInsertion = true
+      // Likely oldWeb3 is undefined and it has a property only because
+      // we defined it. Some sites like wnyc.org are evaling all scripts
+      // that exist again, so this is protection against multiple calls.
+      if (window.web3 === undefined) {
+        return
+      }
+      __insertDappDetected()
+    } else {
+      var oldWeb3 = window.web3
+      Object.defineProperty(window, 'web3', {
+        configurable: true,
+        set: function (val) {
+          if (!window.__disableDappDetectionInsertion)
+            __insertDappDetected()
+          oldWeb3 = val
+        },
+        get: function () {
+          if (!window.__disableDappDetectionInsertion)
+            __insertDappDetected()
+          return oldWeb3
+        }
+      })
+    }
+  })()</script>
+  
+</head>
+  
+  <body>
+   
+    <nav class="navbar navbar-expand-lg navbar-secondary bg-dark">
+      <a class="navbar-brand" href="#">DenunciasApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item {% if request.endpoint =='user_page.login' %}  active {% endif %}">
+            <a class="nav-link" href="{{ url_for('user_page.login') }}">Log In</a>
+          </li>
+          <li class="nav-item {% if request.endpoint =='user_page.signup' %}  active {% endif %}">
+            <a class="nav-link" href="{{ url_for('user_page.signup') }}">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+    <!-- Page Content -->
+    <div class="container">
+    
+        {% block content%} {% endblock %}
+    </div>
+  
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+  
+  
+  
+  </body></html>
