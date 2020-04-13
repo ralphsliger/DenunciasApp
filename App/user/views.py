@@ -31,6 +31,6 @@ def signup():
             password= hashed_password
         )
         user.save()
-        return 'formulario'
+        return 'registrado con exito'
     return render_template('user/signup.html', form=form)
 
