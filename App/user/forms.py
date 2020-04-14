@@ -1,8 +1,9 @@
-from wtforms import Form, StringField, PasswordField, validators
+from flask_wtf import FlaskForm
+from wtforms import Form, StringField, PasswordField, validators, ValidationError
 from wtforms.fields.html5 import EmailField
 from user.models import User
 
-class RegistrationForm(Form):
+class RegistrationForm(FlaskForm):
     username = StringField('Your Username', [validators.DataRequired(),validators.Length(min=2,max=30)])
     name = StringField('Your Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
     lastname = StringField('Your Last Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
@@ -14,3 +15,8 @@ class RegistrationForm(Form):
     def validate_email(FlaskForm, field):
         if User.objects.filter(email=field.data).first():
             raise ValidationError('Email address alreay in use')
+
+
+class LoginForm(FlaskForm):
+    email= EmailField('Email address', [validators.DataRequired(), validators.Email()])
+    password = PasswordField('Password', [validators.DataRequired()])
