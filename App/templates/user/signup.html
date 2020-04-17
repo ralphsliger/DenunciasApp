@@ -9,7 +9,6 @@
         {% from '_formhelpers.html' import render_field %}
         <form method="POST" action="{{ url_for('user_page.signup') }}">
             {{ form.crsf_token }}
-            {{ render_field(form.username, class='form-control', placeholder='enter your username') }}
             {{ render_field(form.name, class='form-control', placeholder='enter your name') }}
             {{ render_field(form.lastname, class='form-control', placeholder='enter your last name') }}
             {{ render_field(form.city, class='form-control', placeholder='enter your city') }}

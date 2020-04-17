@@ -1,8 +1,7 @@
 #controlador de modulo user
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, abort
 from user.models import User
-from user.forms import RegistrationForm
-from user.forms import LoginForm
+from user.forms import RegistrationForm, LoginForm, EditProfileForm
 import bcrypt
 from user.decorators import login_required
 
@@ -44,7 +43,6 @@ def signup():
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(form.password.data, salt)   
         user = User(      
-            username= form.username.data,
             name= form.name.data,
             lastname= form.lastname.data,
             city= form.city.data,
@@ -59,4 +57,22 @@ def signup():
 @login_required
 def edit():
     user = User.objects.filter(email=session['email']).first()
-    return render_template('user/edit.html', user=user)
+    if user: 
+        error = None
+        message = None
+        form = EditProfileForm(obj=user)
+
+        if request.method == 'POST' and form.validate():
+            if user.email != form.email.data.lower():
+                if User.objects.filter(email=form.email.data.lower()).first():
+                    error = 'Email is already in use'
+                else: 
+                    session['email'] = form.email.data.lower()
+            if not error:
+                form.populate_obj(user)
+                user.save()
+                message = 'Profile updated'
+
+        return render_template('user/edit.html', user=user, form=form, error=error, message=message)
+    else:
+        abort(404)

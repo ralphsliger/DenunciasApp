@@ -4,8 +4,33 @@
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <h3>
-         Hi ,  {{ user.name}}
+         Edit Profile
+
         </h3>
+        {% if error  %}
+        <div class='alert alert-danger' role='alert'>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        {% from '_formhelpers.html' import render_field %}
+        <form method='POST' action="{{url_for('user_page.edit') }}">
+            {{ form.csrf_token }}
+            {{ render_field(form.name, class='form-control') }}
+            {{ render_field(form.lastname, class='form-control') }}
+            {{ render_field(form.city, class='form-control') }}
+            {{ render_field(form.email, class='form-control') }}
+            {{ render_field(form.bio, class='form-control') }}
+
+            <button type="submit" class="btn btn-success"> Save </button>
+
+        </form>
 
 
     </div>
