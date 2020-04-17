@@ -15,7 +15,7 @@ def login():
     error = None
         # si request es post y el formato ha sido validado compara el hash en la base de datos
     if request.method == 'POST' and form.validate():
-        user = User.objects.filter(email=form.email.data).first()
+        user = User.objects.filter(email=form.email.data.lower()).first()
         if user:
             if bcrypt.checkpw(form.password.data, user.password):
                 session['email'] = user.email
@@ -48,7 +48,7 @@ def signup():
             name= form.name.data,
             lastname= form.lastname.data,
             city= form.city.data,
-            email= form.email.data,
+            email= form.email.data.lower(),
             password= hashed_password
         )
         user.save()

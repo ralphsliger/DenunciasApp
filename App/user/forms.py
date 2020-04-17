@@ -13,7 +13,7 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat password')
 
     def validate_email(FlaskForm, field):
-        if User.objects.filter(email=field.data).first():
+        if User.objects.filter(email=field.data.lower()).first():
             raise ValidationError('Email address alreay in use')
 
 
