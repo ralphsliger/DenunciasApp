@@ -74,12 +74,27 @@
     
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
+          <!-- Si el usuario esta logeado se mostrara el dropdown con opciones-->
+          {% if session.email %}   
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ session.email }}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ url_for('user_page.edit') }}">Edit Profile</a>
+              <a class="dropdown-item" href="#">Change Password</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="dropdown-item" href="{{ url_for('user_page.logout') }}"">Logout</a>
+          </li>
+            <!-- Si el usuario no esta logeado se mostrara el dropdown basico de login/signup-->
+          {% else %}
           <li class="nav-item {% if request.endpoint =='user_page.login' %}  active {% endif %}">
             <a class="nav-link" href="{{ url_for('user_page.login') }}">Log In</a>
           </li>
           <li class="nav-item {% if request.endpoint =='user_page.signup' %}  active {% endif %}">
             <a class="nav-link" href="{{ url_for('user_page.signup') }}">Sign Up</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </nav>

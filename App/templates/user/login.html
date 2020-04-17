@@ -13,7 +13,8 @@
         {% endif %}
 
         {% from '_formhelpers.html' import render_field  %}
-        <form method="POST" action="{{ url_for('user_page.login') }}">
+       <!-- <form method="POST" action="{{ url_for('user_page.login') }}"></form> -->
+            <form method="POST">
             {{ form.csrf_token }}
             {{ render_field(form.email, class='form-control', placeholder='Enter your email')}}
             {{ render_field(form.password, class='form-control', placeholder='Enter your password')}} 

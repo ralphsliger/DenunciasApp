@@ -3,7 +3,7 @@ from wtforms import Form, StringField, PasswordField, validators, ValidationErro
 from wtforms.fields.html5 import EmailField
 from user.models import User
 
-class RegistrationForm(FlaskForm):
+class RegistrationForm(Form):
     username = StringField('Your Username', [validators.DataRequired(),validators.Length(min=2,max=30)])
     name = StringField('Your Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
     lastname = StringField('Your Last Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
@@ -17,6 +17,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email address alreay in use')
 
 
-class LoginForm(FlaskForm):
+class LoginForm(Form):
     email= EmailField('Email address', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', [validators.DataRequired()])

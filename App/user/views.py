@@ -13,12 +13,14 @@ user_page = Blueprint('user_page', __name__)
 def login():
     form = LoginForm(request.form)
     error = None
+        # si request es post y el formato ha sido validado compara el hash en la base de datos
     if request.method == 'POST' and form.validate():
         user = User.objects.filter(email=form.email.data).first()
         if user:
             if bcrypt.checkpw(form.password.data, user.password):
                 session['email'] = user.email
-                return redirect(request.args.get('next') or url_for('hello'))
+                #return redirect(request.args.get('next') or url_for('home'))
+                return 'logeado'
             else:
                 user = None
         if not user:
@@ -35,7 +37,9 @@ def logout():
 
 @user_page.route('/signup', methods=['GET', 'POST'])
 def signup():
+    #instancia formulario de registro
     form = RegistrationForm(request.form)
+    # si request es post y el formato ha sido validado registra el usuario
     if request.method == 'POST' and form.validate():
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(form.password.data, salt)   
