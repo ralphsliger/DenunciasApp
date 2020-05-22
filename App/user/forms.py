@@ -3,6 +3,7 @@ from wtforms import Form, StringField, PasswordField, validators, ValidationErro
 from wtforms.fields.html5 import EmailField
 from user.models import User
 from wtforms.widgets import TextArea
+from flask_wtf.file import FileField, FileAllowed
 
 class BaseUserForm(Form):
     name = StringField('Your Name', [validators.DataRequired(),validators.Length(min=2,max=30)])
@@ -11,7 +12,9 @@ class BaseUserForm(Form):
     email = EmailField('Email Adress', [validators.DataRequired(), validators.Email()])
 
 class RegistrationForm(BaseUserForm): 
-    password = PasswordField('New password', [validators.DataRequired(), validators.EqualTo('confirm', message='password must match')])
+    password = PasswordField('New password', [
+        validators.DataRequired(), 
+        validators.EqualTo('confirm', message='password must match')])
     confirm = PasswordField('Repeat password')
 
     def validate_email(FlaskForm, field):
@@ -20,8 +23,7 @@ class RegistrationForm(BaseUserForm):
 
 class EditProfileForm(BaseUserForm):
     bio = StringField('Bio', widget=TextArea(), validators=[validators.Length(max=200)])
-
-
+    image = FileField('Profile image', [FileAllowed(['jpg','jpeg','png'], 'Only allowed .jpg .png files')])
 
 class LoginForm(Form):
     email= EmailField('Email address', [validators.DataRequired(), validators.Email()])
