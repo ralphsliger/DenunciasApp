@@ -10,7 +10,7 @@
     <title> {% block titel %} {%endblock%}</title>
   
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/minty/bootstrap.min.css" rel="stylesheet" integrity="sha384-HqaYdAE26lgFCJsUF9TBdbZf7ygr9yPHtxtg37JshqVQi6CCAo6Qvwmgc5xclIiV" crossorigin="anonymous">
   
   
     <!-- Custom styles for this template -->
@@ -80,7 +80,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ session.email }}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{ url_for('user_page.edit') }}">Edit Profile</a>
-              <a class="dropdown-item" href="#">Change Password</a>
+              <a class="dropdown-item" href="{{ url_for('user_page.password') }}">Change Password</a>
             </div>
           </li>
           <li class="nav-item">

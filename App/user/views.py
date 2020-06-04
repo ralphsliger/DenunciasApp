@@ -1,7 +1,7 @@
 #controlador de modulo user
 from flask import Blueprint, render_template, request, session, redirect, url_for, abort
 from user.models import User
-from user.forms import RegistrationForm, LoginForm, EditProfileForm
+from user.forms import RegistrationForm, LoginForm, EditProfileForm, PasswordForm
 import bcrypt
 from user.decorators import login_required
 from utilities.storage import upload_image_file
@@ -78,9 +78,32 @@ def edit():
                 print(str(request.files.get('image')))
                 if image_url:
                     user.profile_image = image_url
-                user.save()
+
+                user.save()  
                 message = 'Profile updated'
 
         return render_template('user/edit.html', user=user, form=form, error=error, message=message)
+    else:
+        abort(404)
+
+#cambiar contraseña 
+@user_page.route('/password', methods=['GET', 'POST'])
+@login_required
+def password():
+    user = User.objects.filter(email=session.get('email')).first()
+    if user:
+        error = None
+        message = None
+        form = PasswordForm()
+        if request.method == 'POST' and form.validate():
+            if bcrypt.checkpw(form.old_password.data, user.password):
+                salt = bcrypt.gensalt()
+                hashed_password = bcrypt.hashpw(form.new_password.data, salt)
+                user.password = hashed_password
+                user.save()
+                message = 'Password updated'
+            else:
+                error = 'Your old password was incorrect'
+        return render_template('user/password.html', form=form, error=error, message=message)
     else:
         abort(404)

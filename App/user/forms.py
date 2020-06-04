@@ -17,7 +17,7 @@ class RegistrationForm(BaseUserForm):
         validators.EqualTo('confirm', message='password must match')])
     confirm = PasswordField('Repeat password')
 
-    def validate_email(FlaskForm, field):
+    def validate_email(Form, field):
         if User.objects.filter(email=field.data.lower()).first():
             raise ValidationError('Email address alreay in use')
 
@@ -28,3 +28,10 @@ class EditProfileForm(BaseUserForm):
 class LoginForm(Form):
     email= EmailField('Email address', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', [validators.DataRequired()])
+
+class PasswordForm(Form):
+    old_password = PasswordField('Old Password', [validators.DataRequired()])
+    new_password = PasswordField('New Password', [validators.DataRequired(),
+                                                 validators.EqualTo('confirm',
+                                                                    message='Passwords must match')])
+    confirm = PasswordField('Confirm Password')
