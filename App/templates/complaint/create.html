@@ -14,8 +14,9 @@
                 {{ error }}
             </div>
         {% endif %}
+        
         {% from '_formhelpers.html' import render_field  %}
-        <form action="{{ url_for('complaint_page.create')}}">
+        <form method="POST" action="{{ url_for('complaint_page.create')}}">
             {{ form.csrf_token}}
             {{ render_field(form.name, class="form-control") }}
             {{ render_field(form.gplace, class="form-control", id="autocomplete", placeholder="Ingresa tu ubicacion") }}
@@ -24,7 +25,9 @@
             {{ render_field(form.lat, class="form-control", id="lat", readonly=true) }}
             {{ render_field(form.description, class="form-control") }}
 
-            <button type="submit" class="btn btn-success"> Create Complaint </button>
+            <button type="submit" class="btn btn-success"> 
+                Create Complaint 
+            </button>
 
 
 
