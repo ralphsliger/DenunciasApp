@@ -1,5 +1,5 @@
 from app import db
-from user.model import User
+from user.models import User
 
 class Complaint(db.Document):
     name = db.StringField(requiered=True)

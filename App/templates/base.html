@@ -75,6 +75,9 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
           <!-- Si el usuario esta logeado se mostrara el dropdown con opciones-->
+          <li class="nav-item {% if request.endpoint =='complaint_page.create' %}  active {% endif %}">
+            <a class="nav-link" href="{{ url_for('complaint_page.create') }}">Create a Complaint</a>
+          </li>
           {% if session.email %}   
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ session.email }}</a>
