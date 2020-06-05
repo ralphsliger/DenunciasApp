@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ user.name }} Perfil 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="text-center">
+            {% if user.profile_image %}
+            <img width="150px" height="150px" src="{{ user.profile_image }}" class="img-thumbnail rounded-circle">
+            {% else %}
+            <img width="150px" height="150px" src="{{ url_for('static', filename='img/user.png') }}" class="img-thrumbnail rounded-circle">
+            {% endif %}
+            <h3>
+                {{ user.name }}
+            </h3>
+            
+            <p>
+                {% if user.bio %}
+                {{ user.bio }}
+                {% else %}
+                Hello everyone, I am a newbie here!
+                {% endif %}
+            </p>
+        </div>
+    </div>   
+</div>
+{% endblock  %}
+    
+{% endblock %}

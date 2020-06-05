@@ -3,8 +3,10 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 from user.models import User
 from user.forms import RegistrationForm, LoginForm, EditProfileForm, PasswordForm
 import bcrypt
+import bson
 from user.decorators import login_required
 from utilities.storage import upload_image_file
+
 
 
 user_page = Blueprint('user_page', __name__)
@@ -107,3 +109,15 @@ def password():
         return render_template('user/password.html', form=form, error=error, message=message)
     else:
         abort(404)
+
+@user_page.route('/<id>')
+def profile(id):
+    try:
+        user = User.objects.filter(id=bson.ObjectId(id)).first()
+    except bson.errors.InvalidId:
+        abort(404)
+    if user:
+        return render_template('user/profile.html', user=user)
+    else:
+        abort(404)
+    
