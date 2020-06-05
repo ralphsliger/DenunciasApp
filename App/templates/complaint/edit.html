@@ -1,34 +1,46 @@
 {% extends 'base.html' %}
 {% block title %}
-    Create Complaint
+    Edit Complaint
 {% endblock title %}
 {% block content %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div>
+            {% if complaint.complaint_photo %}
+            <img width="100%" src="{{complaint.complaint_photo}}"> 
+     
+            {% else %}
+            <img width="100%" src="{{ url_for('static', filename='img/complaint.png') }}"> 
+            {% endif %}
+                
             <h3>
-                Create Complaint
+                Edit Complaint
             </h3>
-            </div>
         </div>
         {% if error %}
             <div class="alert alert-danger">
                 {{ error }}
             </div>
         {% endif %}
+
+        {% if message %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
         
         {% from '_formhelpers.html' import render_field  %}
-        <form method="POST" action="{{ url_for('complaint_page.create')}}">
+        <form method="POST" action="{{ url_for('complaint_page.edit', id=complaint.id) }}" enctype="multipart/form-data">
             {{ form.csrf_token}}
             {{ render_field(form.name, class="form-control") }}
             {{ render_field(form.gplace, class="form-control", id="autocomplete", placeholder="Ingresa tu ubicacion") }}
             {{ render_field(form.place, class="form-control",id="place", readonly=true) }}
             {{ render_field(form.lng, class="form-control", id="lng", readonly=true) }}
             {{ render_field(form.lat, class="form-control", id="lat", readonly=true) }}
+            {{ render_field(form.photo, class="form-control") }}
             {{ render_field(form.description, class="form-control") }}
 
             <button type="submit" class="btn btn-success"> 
-                Create Complaint 
+          Save Changes
             </button>
 
 
@@ -36,7 +48,6 @@
         </form> 
     </div>
 {% endblock  %}
-
 {% block javascript %}
 {% include 'googleapi.html' %}
 {% endblock  %}
