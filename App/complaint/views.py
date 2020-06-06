@@ -138,4 +138,13 @@ def unsupport(id):
     else:
         abort(404)
 
-
+@complaint_page.route('/manage/<int:complaint_page_number>', methods=['GET'])
+@complaint_page.route('/manage', methods=['GET'])
+@login_required
+def manage(complaints_page_number=1):
+    user = User.objects.filter(email=session.get('email')).first()
+    if user:
+        complaints = Complaint.objects.filter(complainer=user.id).order_by('name').paginate(page=complaints_page_number, per_page=4)
+        return render_template('complaint/manage.html', complaints=complaints)
+    else:
+        abort(404)     

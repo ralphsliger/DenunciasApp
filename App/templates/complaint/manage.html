@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}List Of Complaints{% endblock %}
+{% block content %}
+
+<h1>
+    My Complaints 
+</h1>
+
+<div class="row">
+    {% for complaint in complaints.items %}
+    <div class="col-md-6 complaint-item">
+        <div class="card">
+            {% if complaint.complaint_photo %}
+            <img class="card-img-top complaint-photo-item" src="{{ complaint.complaint_photo}}">
+            {% else %}
+            <img class="card-img-top complaint-photo-item" src="{{ url_for('static', filename='img/complaint.png')}}">
+            {% endif %}
+            <div class="card-block">
+                <h4 class="card-title">
+                    {{ complaint.name }}
+                </h4>
+                <p class="card-text">
+                    {{ complaint.description[:150] }}
+                </p>
+                <p class="card-text">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <a href="http://maps.google.com?q={{ complaint.place }}" target="_blank">
+                    {{ complaint.place }}
+                    </a>
+                    <br>
+                    
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    {{ complaint.follow |length }} Support
+                </p>
+                {% if complaint.cancel %}
+                <button class="btn btn-danger">
+                    Canceled
+                </button>
+                {% else %}
+                <a href="{{ url_for('complaint_page.edit', id=complaint.id) }}" class="btn btn-success">
+                    Edit
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center">
+    <ul class="pagination">
+        {% if complaints.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('complaint_page.manage',
+            complaint_page_number=complaints.prev_num) }}">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <li class="page-item">
+            <p class="page-link">
+                Page {{ complaints.page }} of {{ complaints.pages }}
+            </p>        
+        </li>
+        {% if complaints.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('complaint_page.manage', 
+            complaint_page_number=complaints.next_num) }}">
+                <span>&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
