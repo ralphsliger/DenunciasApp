@@ -102,5 +102,40 @@ def public(id):
     else:
         abort(404)
 
+#Apoyar queja 
+@complaint_page.route('/<id>/support', methods=['GET'])
+@login_required
+def join(id):
+    user = User.objects.filter(email=session.get('email')).first()
+    try:
+        complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
+    except bson.errors.InvalidId:
+        abort(404)    
+    
+    if user and complaint:
+        if user not in complaint.follow:
+            complaint..append(user)
+            party.save()
+        return redirect(url_for('complaint_page.public', id=id))
+    else:
+        abort(404)
+
+#dejar de apoyar la queja     
+@complaint_page.route('/<id>/unsupport', methods=['GET'])
+@login_required
+def unsupport(id):
+    user = User.objects.filter(email=session.get('email')).first()
+    try:
+        complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
+    except bson.errors.InvalidId:
+        abort(404)   
+    
+    if user and complaint:
+        if user in complaint.follow:
+            complaint.follow.remove(user)
+            complaint.save()
+        return redirect(url_for('complaint_page.public', id=id))
+    else:
+        abort(404)
 
 
