@@ -105,7 +105,7 @@ def public(id):
 #Apoyar queja 
 @complaint_page.route('/<id>/support', methods=['GET'])
 @login_required
-def join(id):
+def support(id):
     user = User.objects.filter(email=session.get('email')).first()
     try:
         complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
@@ -114,8 +114,8 @@ def join(id):
     
     if user and complaint:
         if user not in complaint.follow:
-            complaint..append(user)
-            party.save()
+            complaint.follow.append(user)
+            complaint.save()
         return redirect(url_for('complaint_page.public', id=id))
     else:
         abort(404)

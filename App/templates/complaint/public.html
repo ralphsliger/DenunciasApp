@@ -41,7 +41,7 @@
         {% elif user in complaint.follow %}
         <a href="{{ url_for('complaint_page.unsupport', id=complaint.id) }}" class="btn btn-danger">Unsupport</a>
         {% else %}
-        <a href="{{ url_for('party_page.support', id=complaint.id) }}" class="btn btn-success">Support</a>
+        <a href="{{ url_for('complaint_page.support', id=complaint.id) }}" class="btn btn-success">Support</a>
         {% endif %}
     </div>
 </div>
