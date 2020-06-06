@@ -29,7 +29,7 @@ class LoginForm(Form):
     email= EmailField('Email address', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', [validators.DataRequired()])
 
-class PasswordForm(Form):
+class PasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', [validators.DataRequired()])
     new_password = PasswordField('New Password', [validators.DataRequired(),
                                                  validators.EqualTo('confirm',

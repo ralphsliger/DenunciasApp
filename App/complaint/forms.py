@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators, ValidationError,  FloatField
-from user.models import User
+from wtforms import StringField, validators, DateTimeField, FloatField
 from wtforms.widgets import TextArea
 from flask_wtf.file import FileField, FileAllowed
 

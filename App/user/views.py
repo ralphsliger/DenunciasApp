@@ -23,7 +23,7 @@ def login():
             if bcrypt.checkpw(form.password.data, user.password):
                 session['email'] = user.email
                 #return redirect(request.args.get('next') or url_for('home'))
-                return 'logeado'
+                return redirect(url_for('complaint_page.create'))
             else:
                 user = None
         if not user:
@@ -53,7 +53,7 @@ def signup():
             password= hashed_password
         )
         user.save()
-        return 'registrado con exito'
+        return redirect(url_for('user_page.login'))
     return render_template('user/signup.html', form=form)
 
 #Editar Usuario

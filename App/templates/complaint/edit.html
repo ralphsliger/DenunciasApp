@@ -1,53 +1,55 @@
-{% extends 'base.html' %}
-{% block title %}
-    Edit Complaint
-{% endblock title %}
+{% extends "base.html" %}
+{% block title %}Edit Complaint{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            {% if complaint.complaint_photo %}
-            <img width="100%" src="{{complaint.complaint_photo}}"> 
-     
-            {% else %}
-            <img width="100%" src="{{ url_for('static', filename='img/complaint.png') }}"> 
-            {% endif %}
-                
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        
+        {% if complaint.complaint_photo %}
+        <img width="100%" src="{{ complaint.complaint_photo }}">
+        {% else %}
+        <img width="100%" src="{{ url_for('static', filename='img/complaint.png') }}">
+        {% endif %}
+        
+        <div class="text-center">
             <h3>
                 Edit Complaint
             </h3>
+            
         </div>
         {% if error %}
-            <div class="alert alert-danger">
-                {{ error }}
-            </div>
-        {% endif %}
-
-        {% if message %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
         {% endif %}
         
-        {% from '_formhelpers.html' import render_field  %}
+        {% if message %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endif %}
+        
+        {% from "_formhelpers.html" import render_field %}
         <form method="POST" action="{{ url_for('complaint_page.edit', id=complaint.id) }}" enctype="multipart/form-data">
-            {{ form.csrf_token}}
+            {{ form.csrf_token }}
             {{ render_field(form.name, class="form-control") }}
-            {{ render_field(form.gplace, class="form-control", id="autocomplete", placeholder="Ingresa tu ubicacion") }}
-            {{ render_field(form.place, class="form-control",id="place", readonly=true) }}
+            {{ render_field(form.gplace, class="form-control", id="autocomplete", placeholder="Enter your address") }}
+            {{ render_field(form.place, class="form-control", id="place", readonly=true) }}
             {{ render_field(form.lng, class="form-control", id="lng", readonly=true) }}
             {{ render_field(form.lat, class="form-control", id="lat", readonly=true) }}
             {{ render_field(form.photo, class="form-control") }}
-            {{ render_field(form.description, class="form-control") }}
-
-            <button type="submit" class="btn btn-success"> 
-          Save Changes
+            {{ render_field(form.description, class="form-control", rows="8", minlength="50") }}
+            
+            <button type="submit" class="btn btn-success">
+                Save
             </button>
-
-
-
-        </form> 
+            
+           
+        </form>
     </div>
-{% endblock  %}
+</div>
+{% endblock %}
+
 {% block javascript %}
-{% include 'googleapi.html' %}
-{% endblock  %}
+{% include "googleapi.html" %}
+{% endblock %}
