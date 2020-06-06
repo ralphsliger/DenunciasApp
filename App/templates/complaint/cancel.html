@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Cancel this complaint {% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h3>
+            {{ complaint.name }}
+        </h3>
+        
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        {% from "_formhelpers.html" import render_field %}
+        <form method="POST" action="{{ url_for('complaint_page.cancel', id=complaint.id) }}">
+            
+            {{ form.csrf_token }}
+            {{ render_field(form.confirm, class="form-control") }}
+            
+            <button type="submit" class="btn btn-danger">
+                Cancel this Complaint
+            </button>
+        
+            <a href="{{ url_for('complaint_page.edit', id=complaint.id) }}">back to edit complaint</a>
+       
+        </form>
+    </div>
+</div>
+{% endblock %}

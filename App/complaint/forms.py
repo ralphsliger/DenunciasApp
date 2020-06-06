@@ -13,3 +13,7 @@ class BasicComplaintForm(FlaskForm):
 
 class EditComplaintForm(BasicComplaintForm):
     photo = FileField('Complaint Photo', [FileAllowed(['jpg','jpeg','png'], 'Only allowed .jpg .png files')])
+
+class CancelComplaintForm(FlaskForm):
+    confirm = StringField('Are you sure do yo want to cancel this complaint? (Say "yes")', validators=[validators.DataRequired()])
+
