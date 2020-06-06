@@ -23,7 +23,7 @@ def login():
             if bcrypt.checkpw(form.password.data, user.password):
                 session['email'] = user.email
                 #return redirect(request.args.get('next') or url_for('home'))
-                return redirect(url_for('complaint_page.create'))
+                return redirect(url_for('complaint_page.explore'))
             else:
                 user = None
         if not user:

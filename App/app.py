@@ -1,5 +1,5 @@
 #inicializador general de todos los componentes
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_mongoengine import MongoEngine 
 import sys
 import os
@@ -21,6 +21,11 @@ def created_app(config=None):
     app.register_blueprint(complaint_page, url_prefix='/complaint')
 
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/ralphsliger/DenunciasApp/App/denunciasapp-5ccfa6b61d34.json"
+    
+    @app.route('/')
+    def home():
+        return redirect(url_for('complaint_page.explore'))
+    
 
     return app 
 
