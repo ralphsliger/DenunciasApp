@@ -86,3 +86,21 @@ def cancel(id):
         return render_template('complaint/cancel.html', form=form, error=error, complaint=complaint)
     else:
         abort(404)
+
+#Mostrar Queja
+@complaint_page.route('/<id>', methods=['GET'])
+def public(id):
+    try:
+        complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
+    except bson.errors.InvalidId:
+        abort(404)
+        
+    if complaint:
+        complainer = User.objects.filter(id=complaint.complainer).first()
+        user = User.objects.filter(email=session.get('email')).first()
+        return render_template('complaint/public.html', complaint=complaint, complainer=complainer, user=user)
+    else:
+        abort(404)
+
+
+

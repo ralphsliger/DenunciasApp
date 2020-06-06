@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ complaint.name }}{% endblock %}
+{% block content %}
+
+<h3>
+    {{ complaint.name }}
+</h3>
+<p class="text-muted">
+    This complaint has been made by
+    <a href="{{ url_for('user_page.profile', id=complaint.complainer) }}">{{ complainer.name }}</a>
+    {% if session.email == complainer.email %}
+    <a href="{{ url_for('complaint_page.edit', id=complaint.id) }}">Edit</a>
+    {% endif %}
+</p>
+
+<div class="row">
+    <div class="col-md-8">
+        {% if complaint.complaint_photo %}
+        <img width="100%" src="{{ complaint.complaint_photo }}">
+        {% else %}
+        <img width="100%" src="{{ url_for('static', filename='img/complaint.png') }}">
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+    
+        <h6>
+            Complaint Place:
+        </h6>
+        <p>
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <a href="http://maps.google.com?q={{ complaint.place }}" target="_blank">
+            {{ complaint.place }}
+            </a>
+        </p>
+
+        
+        {% if complaint.cancel %}
+        This complaint has been canceled.
+        {% elif session['email'] == complainer.email %}
+        {% elif user in complaint.follow %}
+        <a href="{{ url_for('complaint_page.unsupport', id=complaint.id) }}" class="btn btn-danger">Unsupport</a>
+        {% else %}
+        <a href="{{ url_for('party_page.support', id=complaint.id) }}" class="btn btn-success">Support</a>
+        {% endif %}
+    </div>
+</div>
+
+<hr>
+<h3>
+    Description
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            {{ complaint.description}}
+        </p>
+    </div>
+</div>
+
+<hr>
+<h3>
+    Support by
+</h3>
+<div class="row">
+    {% for user in complaint.follow %}
+    <div class="col-md-3 text-center">
+        <a href="{{ url_for('user_page.profile', id=user.id) }}">
+        {% if user.profile_image %}
+            <img width="150px" height="150px" src="{{ user.profile_image }}"
+                 class="img-thumbnail rounded-circle">
+        {% else %}
+            <img width="150px" height="150px" src="{{ url_for('static', filename='img/user.png')}}"
+                 class="img-thumbnail rounded-circle">
+        {% endif %}
+            <p>
+                {{ user.name }}
+            </p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

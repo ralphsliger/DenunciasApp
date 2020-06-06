@@ -110,6 +110,8 @@ def password():
     else:
         abort(404)
 
+
+#Perfil usuario 
 @user_page.route('/<id>')
 def profile(id):
     try:

@@ -15,7 +15,9 @@
             <h3>
                 Edit Complaint
             </h3>
-            
+            <h6>
+                <a href="{{ url_for('complaint_page.public', id=complaint.id) }}">See this complaint </a>
+            </h6>
         </div>
         {% if error %}
         <div class="alert alert-danger">
