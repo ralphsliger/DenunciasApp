@@ -148,3 +148,17 @@ def manage(complaints_page_number=1):
         return render_template('complaint/manage.html', complaints=complaints)
     else:
         abort(404)     
+
+#Listado global de denuncias
+@complaint_page.route('/explore/<int:complaint_page_number>', methods=['GET'])
+@complaint_page.route('/explore', methods=['GET'])
+def explore(complaint_page_number=1):
+    place = request.args.get('place')
+    try:
+        lng = float(request.args.get('lng'))
+        lat = float(request.args.get('lat'))
+        complaints = Complaint.objects(location__near=[lng, lat], location__max_distance=1000000000000,
+                               cancel=False).order_by('name').paginate(page=complaint_page_number, per_page=4)
+        return render_template('complaint/explore.html', complaints=complaints, place=place, lng=lng, lat=lat)
+    except:
+        return render_template('complaint/explore.html', place=place)

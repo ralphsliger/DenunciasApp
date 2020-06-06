@@ -78,6 +78,9 @@
           <li class="nav-item {% if request.endpoint =='complaint_page.create' %}  active {% endif %}">
             <a class="nav-link" href="{{ url_for('complaint_page.create') }}">Create a Complaint</a>
           </li>
+          <li class="nav-item {% if request.endpoint == 'complaint_page.explore' %}active{% endif %}">
+            <a class="nav-link" href="{{ url_for('complaint_page.explore') }}">Explore</a>
+          </li> 
           {% if session.email %}   
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ session.email }}</a>

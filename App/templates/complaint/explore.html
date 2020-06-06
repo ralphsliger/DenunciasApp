@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %} Explore {% endblock %}
+{% block content %}
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">
+            Find Complaints
+        </h1>
+        <p class="lead text-muted">
+            Explore complaints around your zone.
+        </p>
+        
+        <form method="GET" action="{{ url_for('complaint_page.explore') }}">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for place..."
+                       id="autocomplete">
+                <input type="hidden" name="place" id="place">
+                <input type="hidden" name='lng' id="lng">
+                <input type="hidden" name="lat" id="lat">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">
+                        Search
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+{% if complaints and complaints.pages > 0 %}
+<p class="text-muted text-center">
+    Complaints near {{ place }}
+</p>
+
+
+<div class="row">
+    {% for complaint in complaints.items %}
+    <div class="col-md-6 complaint-item">
+        <div class="card">
+            <a href="{{ url_for('complaint_page.public', id=complaint.id) }}" target="_blank">
+            {% if complaint.complaint_photo %}
+            <img class="card-img-top complaint-photo-item" src="{{ complaint.complaint_photo}}">
+            {% else %}
+            <img class="card-img-top complaint-photo-item" src="{{ url_for('static', filename='img/complaint.png')}}">
+            {% endif %}
+            </a>
+            <div class="card-block">
+                <h4 class="card-title">
+                    {{ complaint.name }}
+                </h4>
+                <p class="card-text">
+                    {{ complaint.description[:150] }}
+                </p>
+                <p class="card-text">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <a href="http://maps.google.com?q={{ party.place }}" target="_blank">
+                    {{ complaint.place }}
+                    </a>
+                    <br>
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    {{ complaint.follow|length }} Support
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center">
+    <ul class="pagination">
+        {% if complaints.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('complaint_page.explore',
+            complaint_page_number=complaints.prev_num, place=place, lng=lng, lat=lat) }}">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <li class="page-item">
+            <p class="page-link">
+                Page {{ complaints.page }} of {{ complaints.pages }}
+            </p>        
+        </li>
+        {% if complaints.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('complaint_page.explore', 
+            complaint_page_number=complaints.next_num, place=place, lng=lng, lat=lat) }}">
+                <span>&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% elif place %}
+<p class="text-muted text-center">
+    We couldn't find any complaints here :(
+</p>
+
+{% else %}
+{% endif %}
+
+{% endblock %}
+{% block javascript %}
+{% include "googleapi.html" %}
+{% endblock %}
