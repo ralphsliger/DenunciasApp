@@ -31,7 +31,7 @@
 
 {% if complaints and complaints.pages > 0 %}
 <p class="text-muted text-center">
-    Complaints near {{ place }}
+    Complaint near {{ place }}
 </p>
 
 
@@ -55,7 +55,7 @@
                 </p>
                 <p class="card-text">
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    <a href="http://maps.google.com?q={{ party.place }}" target="_blank">
+                    <a href="http://maps.google.com?q={{ complaint.place }}" target="_blank">
                     {{ complaint.place }}
                     </a>
                     <br>

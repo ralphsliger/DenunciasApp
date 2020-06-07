@@ -158,8 +158,11 @@ def explore(complaint_page_number=1):
     try:
         lng = float(request.args.get('lng'))
         lat = float(request.args.get('lat'))
-        complaints = Complaint.objects(location__near=[lng, lat], location__max_distance=1000000000000,
-                               cancel=False).order_by('name').paginate(page=complaint_page_number, per_page=4)
+        complaints = Complaint.objects(location__near=[lng, lat], location__max_distance=100000,
+                               cancel=False).paginate(page=complaint_page_number, per_page=4)
         return render_template('complaint/explore.html', complaints=complaints, place=place, lng=lng, lat=lat)
     except:
         return render_template('complaint/explore.html', place=place)
+
+
+
