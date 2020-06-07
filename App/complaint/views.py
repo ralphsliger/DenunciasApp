@@ -6,12 +6,13 @@ from complaint.forms import BasicComplaintForm, EditComplaintForm, CancelComplai
 from user.decorators import login_required
 from complaint.models import Complaint
 from user.models import User
-from utilities.storage import upload_image_file 
+from utilities.storage import upload_image_file
 
 
 
 complaint_page = Blueprint('complaint_page', __name__)
 
+#Crear queja
 @complaint_page.route('/create', methods=['GET','POST'])
 @login_required
 def create():
@@ -34,7 +35,7 @@ def create():
             return redirect(url_for('complaint_page.edit', id=complaint.id))
     return render_template('complaint/create.html', form=form)
 
-
+#editar queja
 @complaint_page.route('/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(id):
@@ -48,13 +49,11 @@ def edit(id):
         message = None
         form = EditComplaintForm(obj=complaint)
         if request.method == 'POST' and form.validate():
-            error= form.errors
-            print(error)
             if not error:
                 form.populate_obj(complaint)
                 if form.lng.data and form.lat.data:
                     complaint.location = [form.lng.data, form.lat.data]
-                image_url = upload_image_file(request.files.get('complaint'), 'complaint_photo', str(complaint.id))
+                image_url = upload_image_file(request.files.get('photo'), 'complaint_photo', str(complaint.id))
                 if image_url:
                     complaint.complaint_photo = image_url
                 complaint.save()
@@ -64,6 +63,7 @@ def edit(id):
     else:
         abort(404)
 
+#cancelar queja
 @complaint_page.route('/<id>/cancel', methods=['GET','POST'])
 @login_required
 def cancel(id):
@@ -102,7 +102,7 @@ def public(id):
     else:
         abort(404)
 
-#Apoyar queja 
+#Apoyar denuncia
 @complaint_page.route('/<id>/support', methods=['GET'])
 @login_required
 def support(id):
@@ -120,7 +120,7 @@ def support(id):
     else:
         abort(404)
 
-#dejar de apoyar la queja     
+#dejar de apoyar las denuncias   
 @complaint_page.route('/<id>/unsupport', methods=['GET'])
 @login_required
 def unsupport(id):
@@ -138,6 +138,7 @@ def unsupport(id):
     else:
         abort(404)
 
+#listado de denuncias hechas (como usuario registrado)
 @complaint_page.route('/manage/<int:complaint_page_number>', methods=['GET'])
 @complaint_page.route('/manage', methods=['GET'])
 @login_required
