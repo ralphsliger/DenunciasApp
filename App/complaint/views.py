@@ -16,13 +16,17 @@ complaint_page = Blueprint('complaint_page', __name__)
 @complaint_page.route('/create', methods=['GET','POST'])
 @login_required
 def create():
+    #instancia formulario 
     form = BasicComplaintForm()
     error = None
+    #validar formulario y post request
     if request.method == 'POST' and form.validate():
         error= form.errors
         print(error)
         if not error:
+            #si el usuario tiene sesion activa
             user = User.objects.filter(email=session.get('email')).first()
+           #almacenar en bd
             complaint= Complaint(
                 name=form.name.data,
                 place=form.place.data,
@@ -40,19 +44,24 @@ def create():
 @login_required
 def edit(id):
     try:
+        #filtar id denuncia
         complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
     except bson.errors.InvalidId:
         abort(404)     
+        #si el usuario tiene sesion activa
     user = User.objects.filter(email=session.get('email')).first()
     if complaint and complaint.complainer == user.id:
         error = None
         message = None
+        #instanciar formulario
         form = EditComplaintForm(obj=complaint)
         if request.method == 'POST' and form.validate():
             if not error:
                 form.populate_obj(complaint)
+                #tomar valores de latitud y longitud y guardarlos en un array 'location'
                 if form.lng.data and form.lat.data:
                     complaint.location = [form.lng.data, form.lat.data]
+                # guardar imagen denuncia 
                 image_url = upload_image_file(request.files.get('photo'), 'complaint_photo', str(complaint.id))
                 if image_url:
                     complaint.complaint_photo = image_url
@@ -68,15 +77,19 @@ def edit(id):
 @login_required
 def cancel(id):
     try:
+        #filtrar id queja
         complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
     except bson.errors.InvalidId:
         abort(404)
+        #verificar sesion usuario
     user = User.objects.filter(email=session.get('email')).first()
     
+    #si el denunciante y la queja tienen el mismo userid y /cancel desactivado
     if complaint and complaint.complainer == user.id and complaint.cancel == False:
         error = None
         form = CancelComplaintForm()
         if request.method == 'POST' and form.validate():
+            #escribir yes para confirmar cancelacion
             if form.confirm.data == 'yes':
                 complaint.cancel = True
                 complaint.save()
@@ -91,9 +104,11 @@ def cancel(id):
 @complaint_page.route('/<id>', methods=['GET'])
 def public(id):
     try:
+        #filtrar id queja
         complaint = Complaint.objects.filter(id=bson.ObjectId(id)).first()
     except bson.errors.InvalidId:
         abort(404)
+        
         
     if complaint:
         complainer = User.objects.filter(id=complaint.complainer).first()
