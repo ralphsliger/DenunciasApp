@@ -25,7 +25,7 @@ La estructura del proyecto esta organizado de acuerdo a Blueprint
 ### Iniciar servidor
 `python run.py`
 
-
-
+## Preview Proyecto
+![home](https://user-images.githubusercontent.com/8931588/83959536-8d974e00-a843-11ea-9944-b7ebe9ef169f.png)
   
   
